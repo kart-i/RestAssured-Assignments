@@ -1,7 +1,7 @@
 package pojos;
 
 
-public class ChangeRequestPayload {
+public class PayloadForCreatingRecord {
 	
 	private String description;
 	private String short_description;

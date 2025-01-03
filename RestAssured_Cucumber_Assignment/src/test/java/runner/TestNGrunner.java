@@ -4,15 +4,13 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
-        features = {"src/test/java/features/CreateChangeRequest.feature"},
+        features = {"src/test/java/features/CreateChangeRequest.feature:28"},
         glue = {"steps"},
-        dryRun = true,
+        dryRun = false,
         publish = true,
 		monochrome = true
 	)
-//        
-  
-
+       
 public class TestNGrunner extends AbstractTestNGCucumberTests {
 	
 }
