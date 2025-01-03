@@ -1,5 +1,7 @@
 package steps;
 
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
 import org.testng.Assert;
 
 import io.cucumber.java.en.And;
@@ -29,7 +31,7 @@ public class CreateChangeRequestTestSteps {
 	Response singleChangeRequestRecord;
 	
 	
-	String sysId;
+	String sysId = "ac1e5eb683f29610eb071c29feaad3c3";
 	String extractedSysId;
 	
 	
@@ -106,7 +108,7 @@ public class CreateChangeRequestTestSteps {
 		  
 	extractedSysId = singleChangeRequestRecord.jsonPath().getString("result.sys_id");
 	
-	Assert.assertEquals(extractedSysId, "4e8189a283ba1610eb071c29feaad397");
+	Assert.assertEquals(extractedSysId, sysId);
 		
 	}
 	
@@ -140,13 +142,14 @@ public class CreateChangeRequestTestSteps {
 	
 	@When("the delete request is sent")
 	public void the_delete_request_is_sent() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	   
+		response = request.delete();
+		
 	}
 	@Then("validate the deleted reponse")
 	public void validate_the_deleted_reponse() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		MatcherAssert.assertThat(response.getStatusCode(), Matchers.equalTo(204));
+		MatcherAssert.assertThat(response.getStatusLine(), Matchers.equalToIgnoringCase("HTTP/1.1 204 No Content"));		
 	}
 	
 

@@ -20,14 +20,14 @@ Examples:
 	
 Scenario: Read a change request and validate
 
-		And  the Endpoint with "4e8189a283ba1610eb071c29feaad397"
+		And  the Endpoint with "ac1e5eb683f29610eb071c29feaad3c3"
 	  When the get request is sent with the sysId
 	  Then validate the response
 	   
 	
 Scenario Outline: Update a change request and validate
 
-		And   the Endpoint with "4e8189a283ba1610eb071c29feaad397"
+		And   the Endpoint with "ac1e5eb683f29610eb071c29feaad3c3"
 		And   the payload is updated with <Short Description> and <Description>
 		When  the put request is sent
 		Then  validate the updated description and short description in the response body
@@ -40,7 +40,7 @@ Examples:
 
 Scenario: Delete a change request and validate
 
-		And   the Endpoint with "4e8189a283ba1610eb071c29feaad397"
+		And   the Endpoint with "ac1e5eb683f29610eb071c29feaad3c3"
 		When  the delete request is sent
 		Then  validate the deleted reponse
 		
