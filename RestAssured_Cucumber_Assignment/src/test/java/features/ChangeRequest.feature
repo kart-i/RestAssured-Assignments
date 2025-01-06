@@ -7,8 +7,7 @@ Background:
  
 Scenario Outline: Create a change request and validate the status code
 
-    When  the payload is added with <Short Description> and <Description>
-    And   a post request is sent
+    When 	a post request is sent with <Short Description>  and <Description>
     Then  validate the status code is 201
     And   validate the description and short description in the response body
    
@@ -20,17 +19,16 @@ Examples:
 	
 Scenario: Read a change request and validate
 
-		And  the Endpoint with "ac1e5eb683f29610eb071c29feaad3c3"
-	  When the get request is sent with the sysId
-	  Then validate the response
-	   
+	  When the get request is sent with the "f53fadb7c37212101f4bb92ed4013108"
+	  Then validate the status code is 200 
+	  And  validate the response with sysId "f53fadb7c37212101f4bb92ed4013108"
+	  
 	
 Scenario Outline: Update a change request and validate
 
-		And   the Endpoint with "ac1e5eb683f29610eb071c29feaad3c3"
-		And   the payload is updated with <Short Description> and <Description>
-		When  the put request is sent
-		Then  validate the updated description and short description in the response body
+		When  the put request is sent with <Short Description>,<Description> and "f53fadb7c37212101f4bb92ed4013108"
+		Then  validate the status code is 200 
+		And   validate the updated description and short description in the response body
 		
 Examples:
 
@@ -40,8 +38,8 @@ Examples:
 
 Scenario: Delete a change request and validate
 
-		And   the Endpoint with "ac1e5eb683f29610eb071c29feaad3c3"
-		When  the delete request is sent
-		Then  validate the deleted reponse
+		When  the delete request is sent with "f53fadb7c37212101f4bb92ed4013108"
+		Then  validate the status code is 204 
+		And   validate the deleted reponse
 		
 		
