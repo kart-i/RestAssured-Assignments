@@ -1,15 +1,11 @@
 package steps;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.testng.Assert;
 
-import io.cucumber.java.en.And;
+import org.testng.Assert;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import pojos.PayloadForCreatingRecord;
@@ -51,11 +47,9 @@ public class ChangeRequestTestSteps {
 		payload.setDescription(desc);
 		
 		
-		response = requestSpecification.body(payload)
-				                       .post();	
-		
-		System.out.println(response.jsonPath().getString("result.sys_id"));	
-		
+		response = requestSpecification.when()
+									   .body(payload)
+				                       .post();		
 	}
 	
 	@When("the get request is sent with the {string}")
@@ -63,13 +57,14 @@ public class ChangeRequestTestSteps {
 		
 		response =  requestSpecification.basePath("/{sys_id}")
 				 						.pathParam("sys_id",sysId)
+				 						.when()			 						
 				 						.get();
-		 
+				 						 
 		System.out.println(response.prettyPrint());
 		 
 	}
 	
-	@When("/^the put request is sent with (.*),(.*) and (.*)$/")
+	@When("the put request is sent with {string},{string} and {string}")
 	public void the_put_request_is_sent_with_updated_change_request_updated_change_request_with_description_and(String shortDesc,String desc,String sysId) {
 	   
 		updatePayload.setShort_description(shortDesc);
@@ -77,12 +72,9 @@ public class ChangeRequestTestSteps {
 		
 	    response = requestSpecification.basePath("/{sys_id}")
 	    							   .pathParam("sys_id",sysId)
+	    							   .when()
 	    							   .body(updatePayload)
-	    							   .log().all()
 	    							   .put();
-	    
-	    System.out.println(response.prettyPrint());
-		
 	}
 	
 	@When("the delete request is sent with {string}")
@@ -90,6 +82,7 @@ public class ChangeRequestTestSteps {
 	   
 		response = requestSpecification.basePath("/{sys_id}")
 				                       .pathParam("sys_id",sysId)
+				                       .when()
 				                       .delete();			                       			
 	}
 	
@@ -105,10 +98,10 @@ public class ChangeRequestTestSteps {
 	public void validate_the_description_and_short_description_in_the_response_body() {
 		
 		String desc = response.jsonPath().getString("result.description");
-		String shortDec = response.jsonPath().getString("result.short_description");
+		String shortDesc = response.jsonPath().getString("result.short_description");
 		
-		Assert.assertEquals(desc, payload.getDescription());
-		Assert.assertEquals(shortDec, payload.getShort_description());
+		Assert.assertEquals(payload.getDescription(),desc);
+		Assert.assertEquals(payload.getShort_description(),shortDesc);
 		
 	}
 	
@@ -116,23 +109,24 @@ public class ChangeRequestTestSteps {
 	public void validate_the_update_description_and_short_description_in_the_response_body() {
 		
 		String desc = response.jsonPath().getString("result.description");
-		String shortDec = response.jsonPath().getString("result.short_description");
+		String shortDesc = response.jsonPath().getString("result.short_description");
 		
-		Assert.assertEquals(desc, updatePayload.getDescription());
-		Assert.assertEquals(shortDec, updatePayload.getShort_description());
+		Assert.assertEquals(updatePayload.getDescription(),desc);
+		Assert.assertEquals(updatePayload.getShort_description(),shortDesc);
+		
 		
 	}
 	
 	@Then("validate the status code is {int}")
 	public void validate_the_status_code_is(Integer code) {
-		Assert.assertEquals(code,response.statusCode());
-		
+		Assert.assertEquals(response.statusCode(),code);
+			
 	}
 	
-	@Then("validate the deleted reponse")
-	public void validate_the_deleted_reponse() {
+	@Then("validate the status line is {string} in the response")
+	public void validate_the_status_line(String statusLine) {
 		
-		MatcherAssert.assertThat(response.getStatusLine(), Matchers.equalToIgnoringCase("HTTP/1.1 204 No Content"));
+		Assert.assertEquals(response.getStatusLine(),statusLine);
 		
 	}
 	
