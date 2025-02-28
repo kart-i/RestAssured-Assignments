@@ -5,8 +5,7 @@ public class PayloadForCreatingRecord {
 	
 	private String description;
 	private String short_description;
-
-	String test = "testing";
+	String test = "testing again";
 
 	public String getDescription() {
 		return description;
