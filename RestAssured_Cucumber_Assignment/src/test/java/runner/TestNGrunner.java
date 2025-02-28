@@ -4,9 +4,9 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 
 @CucumberOptions(
-        features = {"src/test/java/features/ChangeRequest.feature"},
+        features = {"src/test/java/features/DataDriven.feature"},
         glue = {"steps"},
-        dryRun = false,
+        dryRun = true,
         publish = true,
 		monochrome = true
 	)
